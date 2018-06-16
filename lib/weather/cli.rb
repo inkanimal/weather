@@ -75,10 +75,10 @@ class Weather::CLI
       when "8"
         puts "#{weather_data.visibility} is the current visibility in your area."
       when "9"
-        puts weather_data.weather_summary
+        puts "The current weather in your area is #{weather_data.temp} and #{weather_data.condition}. Although, it #{weather_data.feels_temp}. The wind is #{weather_data.wind.strip} and the current humidity is #{weather_data.humidity}. The dew point temp is #{weather_data.dew_point}. #{weather_data.visibility} is the distance you can see today and the pressure is #{weather_data.pressure.strip}."
       when "10"
         puts "Okay, going to get a new zip code"
-        return true
+        return start
       else "11"
         puts "Thank you for using Weather. Goodbye."
         return false
