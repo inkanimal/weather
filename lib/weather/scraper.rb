@@ -1,102 +1,63 @@
-class Cli
+class Weather::Scraper
 
-  # def initialize
-  #  self.start
-  # end
+ def self.scrape_weather(zip)
 
-  def start
-    puts ""
-    puts "              | Welcome to Weather |                 "
-    puts ""
-    # zip = get_zip
-    zip = WeatherMain.get_zip
-    weather_data = Scraper.scrape_weather(zip)
-    weather_list(weather_data)
-  end
-
-
-
-
-  # def get_zip
-    # needs to get the users zip code and pass that to the scraper. needs to check is zip code is valid.
-  #   input = ""
-  #   retreived_value_zip = false
-  #   while retreived_value_zip == false
-  #    puts "Please enter your zip code to see the weather in your area."
-  #    input = gets.strip
-  #    zip = input.to_i  #(00704,99950)
-  #    if zip.between?(00704,99950) == false
-  #      puts "That is not a valid zip code. Please try again."
-  #    else
-  #      retreived_value_zip = true
-  #    end
-  #  end
-  #  zip
-  # end
-
-  def weather_list(weather_data)
-    input = ""
-    while true
-      puts ""
-      puts "      Please type in the number that corresponds to the weather condition that you would like to view.
-      To return to the beginning, please type 10.
-      To exit, please type 11."
-      puts ""
-      puts "            1. Temperature
-            2. Current conditions
-            3. Feels like Temperature
-            4. Wind
-            5. Humidity
-            6. Dew Point
-            7. Pressure
-            8. Visibility
-            9. Weather Summary
-           10. Return to the Start
-           11. Exit"
-
-      input = gets.strip
-      if input.to_i.between?(1,11) == false
-        puts "That is an invalid entry. Please choose again."
-      else
-       case input
-# instance
-      when "1"
-        puts "The current temperature is #{weather_data.temp}."
-      when "2"
-        puts "The current weather condition is #{weather_data.condition}."
-      when "3"
-        puts "The temperature #{weather_data.feels}."
-      when "4"
-        puts "The current wind direction and speed are #{weather_data.wind.strip}."
-      when "5"
-        puts "The humidity is #{weather_data.humidity}."
-      when "6"
-        puts "The dew point is #{weather_data.dew_point}."
-      when "7"
-        puts "The current pressure is #{weather_data.pressure.strip}."
-      when "8"
-        puts "#{weather_data.visibility} is the current visibility in your area."
-      when "9"
-        puts weather_data.weather_summary
-      when "10"
-        puts "Okay, going to get a new zip code"
-        return true
-      else "11"
-        puts "Thank you for using Weather. Goodbye."
-        return false
-      end
+    #need to put #{get_zip} into the url
+     web_content = open("https://weather.com/weather/today/l/#{zip}:4:US")
+     content = web_content.read
+     doc = Nokogiri::HTML(content)
+     weather_content = doc.css('.today_nowcard')
+     weather = Weather::WeatherMain.new
+     weather.temp = weather_content.css('.today_nowcard-temp').first.inner_text
+     weather.condition = weather_content.css('.today_nowcard-phrase').first.inner_html
+     weather.feels_temp = weather_content.css('.today_nowcard-feels').first.inner_text
+     condition_num  = weather_content.css('.today_nowcard-sidecar').css('tr').css('td').collect do |item| item.text
     end
-  end
+     weather.wind = condition_num[0]
+     weather.humidity = condition_num[1]
+     weather.dew_point = condition_num[2]
+     weather.pressure = condition_num[3]
+     weather.visibility = condition_num[4]
+     weather
+ end
 end
+      # WeatherMain.all <<
+     # temp = data.css('.today_nowcard-temp').first.inner_text
+       # condition = data.css('.today_nowcard-phrase').first.inner_html
+       # feels_temp = data.css('.today_nowcard-feels').first.inner_text
 
-# exited = false
-# while exited == false
-#   exited = mycli.start
-# end
 
-# weather_cli = Cli.new
-#  should_run = true
-#  while should_run == true
-#    should_run = weather_cli.start
-#  end
-end
+  # def self.scrape_weather_two(weather_object)
+  #      # condition_text = data.css('.today_nowcard-sidecar').css('tr').css('th').collect do |item| item.text
+  #    condition_num  = data.css('.today_nowcard-sidecar').css('tr').css('td').collect do |item| item.text
+  #      #weather_object.wind = condition_num[0]
+  #      # ....
+  #      # WeatherMain.all.push(condition_num)
+  #    end
+  # end
+
+
+    # wind = []
+    #   wind.push(condition_num[0])
+    # humidity = []
+    #   humidity.push(condition_num[1])
+    # dew_point = []
+    #   dew_point.push(condition_num[2])
+    # pressure
+    #   pressure.push(condition_num[3])
+    # visibility
+    #   visibility.push(condition_num[4])
+
+  # new_content.css('.today_nowcard').css('.today_nowcard-temp').first.inner_text
+  # new_content.css('.today_nowcard').css('.today_nowcard-phrase').first.inner_html
+  # new_content.css('.today_nowcard').css('.today_nowcard-feels').first.inner_text
+  # hilo and uv index = new_content.css('.today_nowcard').css('.today_nowcard-hilo').first.inner_text
+  # contains humidity, dew point, pressure, visibility may need to iterate over this and separate and put back together
+  # new_content.css('.today_nowcard').css('.today_nowcard-sidecar').first.inner_text
+  # new_content.css('.today_nowcard').css('.today_nowcard-sidecar').css('tr').first.text
+  # (winds 7 mph)
+  # new_content.css('.today_nowcard').css('.today_nowcard-sidecar').css('tr').collect do |item| item.text
+  # gives me -  ["WindS 7 mph ", "Humidity73%", "Dew Point56°", "Pressure30.05 in ", "Visibility10.0 mi"]
+  # .split(/(?<=\d)(?=[A-Za-z])/)
+  # new_content.css('.today_nowcard').css('.today_nowcard-sidecar').css('tr').css('th').collect do |item| item.text
+  # new_content.css('.today_nowcard').css('.today_nowcard-sidecar').css('tr').css('td').collect do |item| item.text

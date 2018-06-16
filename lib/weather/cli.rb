@@ -1,4 +1,4 @@
-class Cli
+class Weather::CLI
 
   # def initialize
   #  self.start
@@ -8,17 +8,15 @@ class Cli
     puts ""
     puts "              | Welcome to Weather |                 "
     puts ""
-    # zip = get_zip
-    zip = WeatherMain.get_zip
-    weather_data = Scraper.scrape_weather(zip)
+    # zip = self.get_zip
+    zip = Weather::WeatherMain.get_zip
+    weather_data = Weather::Scraper.scrape_weather(zip)
     weather_list(weather_data)
   end
 
 
-
-
-  # def get_zip
-    # needs to get the users zip code and pass that to the scraper. needs to check is zip code is valid.
+  # def self.get_zip
+  #   needs to get the users zip code and pass that to the scraper. needs to check is zip code is valid.
   #   input = ""
   #   retreived_value_zip = false
   #   while retreived_value_zip == false
@@ -65,7 +63,7 @@ class Cli
       when "2"
         puts "The current weather condition is #{weather_data.condition}."
       when "3"
-        puts "The temperature #{weather_data.feels}."
+        puts "The temperature #{weather_data.feels_temp}."
       when "4"
         puts "The current wind direction and speed are #{weather_data.wind.strip}."
       when "5"
