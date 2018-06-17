@@ -1,8 +1,6 @@
 # Weather
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/weather`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This is a weather CLI application that will scrape weather data from weather.com based on the user's input of a zip code. It will return a list of weather data that the user can then choose from, to see specific weather conditions for their area.
 
 ## Installation
 
@@ -19,10 +17,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install weather
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 
