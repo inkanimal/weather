@@ -1,10 +1,8 @@
 class Weather::WeatherMain
 
-
   @@all = []
 
-  attr_accessor :temp, :condition, :feels_temp, :wind, :humidity, :dew_point, :pressure, :visibility, :zip
-
+  attr_accessor :temp, :condition, :feels_temp, :wind, :humidity, :dew_point, :pressure, :visibility, :zip, :time
 
   def initialize
     @temp = temp
@@ -16,10 +14,15 @@ class Weather::WeatherMain
     @pressure = pressure
     @visibility = visibility
     @zip = zip
-    
+    @time = time
+    self.class.all << self
   end
 
-  def self.get_zip
+  def self.all
+    @@all
+  end
+
+  def self.zip_code
    input = ""
    retreived_value_zip = false
    while retreived_value_zip == false
@@ -35,10 +38,9 @@ class Weather::WeatherMain
   zip
  end
 
-  def weather_summary
-    return "The current weather in your area is #{get_temp} and #{get_condition}. Although, it #{get_feels}. The wind is #{get_wind.strip} and the current humidity is #{get_hum}. The dew point temp is #{get_dew}. #{get_vis} is the distance you can see today and the pressure is #{get_pressure.strip}."
-  end
+
 end
+
 
   # def self.all
   #   @@all

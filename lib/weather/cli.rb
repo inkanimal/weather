@@ -9,10 +9,11 @@ class Weather::CLI
     puts "              | Welcome to Weather |                 "
     puts ""
     # zip = self.get_zip
-    zip = Weather::WeatherMain.get_zip
+    zip = Weather::WeatherMain.zip_code
     weather_data = Weather::Scraper.scrape_weather(zip)
     weather_list(weather_data)
   end
+
 
 
   # def self.get_zip
@@ -59,9 +60,9 @@ class Weather::CLI
        case input
 # instance
       when "1"
-        puts "The current temperature is #{weather_data.temp}."
+        puts "As of #{weather_data.time}, the current temperature at zip code #{weather_data.zip} is #{weather_data.temp}."
       when "2"
-        puts "The current weather condition is #{weather_data.condition}."
+        puts "The current weather condition is #{weather_data.condition}, as of #{weather_data.time}."
       when "3"
         puts "The temperature #{weather_data.feels_temp}."
       when "4"
@@ -73,9 +74,9 @@ class Weather::CLI
       when "7"
         puts "The current pressure is #{weather_data.pressure.strip}."
       when "8"
-        puts "#{weather_data.visibility} is the current visibility in your area."
+        puts "#{weather_data.visibility} is the current visibility in #{weather_data.zip}."
       when "9"
-        puts "The current weather in your area is #{weather_data.temp} and #{weather_data.condition}. Although, it #{weather_data.feels_temp}. The wind is #{weather_data.wind.strip} and the current humidity is #{weather_data.humidity}. The dew point temp is #{weather_data.dew_point}. #{weather_data.visibility} is the distance you can see today and the pressure is #{weather_data.pressure.strip}."
+        puts "As of #{weather_data.time}, the current weather in your zip code #{weather_data.zip} is #{weather_data.temp} and #{weather_data.condition}. Although, it #{weather_data.feels_temp}. The wind is #{weather_data.wind.strip} and the current humidity is #{weather_data.humidity}. The dew point temp is #{weather_data.dew_point}. #{weather_data.visibility} is the distance you can see today and the pressure is #{weather_data.pressure.strip}."
       when "10"
         puts "Okay, going to get a new zip code"
         return start

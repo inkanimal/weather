@@ -1,8 +1,8 @@
 require_relative "weather/version"
 
-module Weather
-  # Your code goes here...
-end
+# module Weather
+#    Your code goes here...
+# end
 require_relative './weather/cli'
 require_relative './weather/scraper'
 require_relative './weather/weather_main'

@@ -18,6 +18,8 @@ class Weather::Scraper
      weather.dew_point = condition_num[2]
      weather.pressure = condition_num[3]
      weather.visibility = condition_num[4]
+     weather.zip = zip
+     weather.time = Time.now.asctime
      weather
  end
 end
